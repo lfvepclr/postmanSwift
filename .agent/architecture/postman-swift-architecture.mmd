@@ -1,0 +1,103 @@
+%% PostmanSwift current-state architecture (engineering view)
+%% Audience: engineering leads / performance review
+%% Date: 2026-10-26
+%% Source of truth: code under Sources/PostmanSwift
+flowchart TB
+  classDef ui fill:#10243d,stroke:#4d8dff,color:#eaf2ff,stroke-width:1px
+  classDef state fill:#271b3f,stroke:#9b7bff,color:#f1ebff,stroke-width:1px
+  classDef domain fill:#0f2f2b,stroke:#35c2a0,color:#e2fff8,stroke-width:1px
+  classDef data fill:#332711,stroke:#e0a63c,color:#fff6df,stroke-width:1px
+  classDef system fill:#2a2a2e,stroke:#9aa0a6,color:#f1f3f4,stroke-width:1px
+  classDef high fill:#3a1518,stroke:#ff5c5c,color:#ffdede,stroke-width:2px
+  classDef med fill:#3a2a10,stroke:#ffb020,color:#fff0cf,stroke-width:2px
+  classDef low fill:#123024,stroke:#5fd08a,color:#e3ffed,stroke-width:1px
+  classDef ext fill:#1c1c20,stroke:#b0b6bd,color:#f1f3f4,stroke-width:1px,stroke-dasharray:4 3
+
+  subgraph L1["L1 · UI / Presentation — SwiftUI + AppKit"]
+    direction LR
+    root["RootView\n左右分栏 · 窗口控制"]:::ui
+    sidebar["SidebarView\nCollections / History / Mock"]:::ui
+    tabs["TabBarView\n全部标签 HStack (M6)"]:::med
+    req["RequestEditorView\nParams / Body / Script"]:::ui
+    resp["ResponseView\nPretty / Raw / Preview"]:::ui
+    tree["JSONTreeView\nVStack≤600 · LazyVStack>600 (M2)"]:::med
+    media["PDF / Image 卡片\n默认折叠 · 固定尺寸"]:::low
+    code["CodeText\nTextKit 2 · 后台准备文本"]:::low
+    env["EnvironmentWorkspaceView\n全宽变量面板"]:::med
+    mockui["MockWorkspaceView\n服务 / case 编辑"]:::ui
+  end
+
+  subgraph L2["L2 · Application State"]
+    direction LR
+    store["AppStore\n单一 ObservableObject (H1)"]:::high
+    tab["RequestTab\n@Published draft / response"]:::state
+    body["ResponseRecord.result.body\n每标签常驻 (H3)"]:::high
+    lib["Library / AppSettings\n集合 · 环境 · Mock 配置"]:::state
+  end
+
+  subgraph L3["L3 · Domain & Services"]
+    direction LR
+    builder["RequestBuilder / AuthBuilder\nVariableResolver"]:::domain
+    http["HTTPClient\nURLSession · 全量缓冲 (M4)"]:::med
+    raw["RawHTTPClient\nPOSIX socket 降级"]:::domain
+    script["ScriptRunner\n每请求 JSContext (M9)"]:::med
+    cookie["CookieJar"]:::domain
+    doc["DocumentTree\nJSON / XML parser + serializer"]:::low
+    pdf["PDFExtractor\n无树时兜底"]:::low
+    mock["MockServer\nPOSIX accept · 路由快照 (M5)"]:::med
+  end
+
+  subgraph L4["L4 · Persistence"]
+    direction LR
+    libjson["library.json\n后台串行队列"]:::low
+    sessjson["session.json\n主线程编码全部标签 (H2)"]:::high
+    cookies["cookies.json\n后台写"]:::low
+    sqlite["history.sqlite\n摘要 400 · 明细按需"]:::low
+  end
+
+  subgraph L5["L5 · System Frameworks"]
+    direction LR
+    urlsession["URLSession / Network"]:::system
+    jsc["JavaScriptCore"]:::system
+    sqlite3["SQLite3"]:::system
+    mediafw["PDFKit / ImageIO"]:::system
+    webkit["WebKit"]:::system
+  end
+
+  root --> sidebar
+  root --> tabs
+  root --> req
+  root --> resp
+  resp --> tree
+  tree --> media
+  resp --> code
+  root --> env
+  root --> mockui
+  sidebar --> store
+  tabs --> store
+  req --> store
+  resp --> store
+  env --> store
+  mockui --> store
+  req --> tab
+  resp --> tab
+  tab --> body
+  store --> lib
+  store --> builder
+  builder --> http
+  http --> urlsession
+  http -.->|ATS -1022 降级| raw
+  store --> script
+  script --> jsc
+  builder --> cookie
+  store --> doc
+  doc --> tree
+  store --> pdf
+  store --> mock
+  store --> libjson
+  store --> sessjson
+  store --> cookies
+  store --> sqlite
+  sqlite --> sqlite3
+  media --> mediafw
+  resp --> webkit

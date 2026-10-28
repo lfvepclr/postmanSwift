@@ -1,0 +1,192 @@
+{
+  "trace": ".agent/perf-baseline/traces/optimized-interaction-clean-20261028.trace",
+  "xctrace_version": "16.0 (17F113)",
+  "run": 1,
+  "runs_available": [
+    1
+  ],
+  "template": "Time Profiler",
+  "duration_s": 25.829964,
+  "start_date": "2026-10-28T21:01:03.764+08:00",
+  "end_date": "2026-10-28T21:01:29.594+08:00",
+  "schemas_available": [
+    "device-thermal-state-intervals",
+    "dyld-library-load",
+    "gcd-perf-event",
+    "global-poi-layout",
+    "global-roi-layout",
+    "hang-risks",
+    "kdebug",
+    "kdebug-signpost",
+    "kdebug-strings",
+    "life-cycle-period",
+    "os-log",
+    "os-log-arg",
+    "os-signpost",
+    "os-signpost-arg",
+    "potential-hangs",
+    "process-info",
+    "region-of-interest",
+    "roi-metadata",
+    "runloop-events",
+    "thread-info",
+    "tick",
+    "time-profile",
+    "time-sample"
+  ],
+  "lanes": [
+    {
+      "lane": "time-profiler",
+      "available": true,
+      "schema_used": "time-profile",
+      "metrics": {
+        "total_samples": 950,
+        "total_weight_ns": 950000000,
+        "total_weight_ms": 950.0,
+        "window_start_ns": 1498226500,
+        "window_end_ns": 25725228041,
+        "processes": [
+          "PostmanSwift"
+        ]
+      },
+      "top_offenders": [
+        {
+          "symbol": "mach_msg2_trap",
+          "weight_ns": 81000000,
+          "weight_ms": 81.0,
+          "samples": 81,
+          "percent": 8.53,
+          "thread": "main"
+        },
+        {
+          "symbol": "<deduplicated_symbol>",
+          "weight_ns": 33000000,
+          "weight_ms": 33.0,
+          "samples": 33,
+          "percent": 3.47,
+          "thread": "main"
+        },
+        {
+          "symbol": "start_wqthread",
+          "weight_ns": 20000000,
+          "weight_ms": 20.0,
+          "samples": 20,
+          "percent": 2.11,
+          "thread": "PostmanSwift (0x1b3d3b5) (PostmanSwift, pid: 33789)"
+        },
+        {
+          "symbol": "objc_msgSend",
+          "weight_ns": 18000000,
+          "weight_ms": 18.0,
+          "samples": 18,
+          "percent": 1.89,
+          "thread": "main"
+        },
+        {
+          "symbol": "DYLD-STUB$$protocol witness for OptionSet.init(rawValue:) in conformance DisplayList.Properties",
+          "weight_ns": 17000000,
+          "weight_ms": 17.0,
+          "samples": 17,
+          "percent": 1.79,
+          "thread": "main"
+        },
+        {
+          "symbol": "__mac_syscall",
+          "weight_ns": 16000000,
+          "weight_ms": 16.0,
+          "samples": 16,
+          "percent": 1.68,
+          "thread": "main"
+        },
+        {
+          "symbol": "_kernelrpc_mach_port_deallocate_trap",
+          "weight_ns": 13000000,
+          "weight_ms": 13.0,
+          "samples": 13,
+          "percent": 1.37,
+          "thread": "main"
+        },
+        {
+          "symbol": "AG::Graph::propagate_dirty(AG::AttributeID)",
+          "weight_ns": 13000000,
+          "weight_ms": 13.0,
+          "samples": 13,
+          "percent": 1.37,
+          "thread": "main"
+        },
+        {
+          "symbol": "swift_release",
+          "weight_ns": 13000000,
+          "weight_ms": 13.0,
+          "samples": 13,
+          "percent": 1.37,
+          "thread": "main"
+        },
+        {
+          "symbol": "swift_bridgeObjectRetain",
+          "weight_ns": 12000000,
+          "weight_ms": 12.0,
+          "samples": 12,
+          "percent": 1.26,
+          "thread": "main"
+        },
+        {
+          "symbol": "AG::Subgraph::update(unsigned int)",
+          "weight_ns": 12000000,
+          "weight_ms": 12.0,
+          "samples": 12,
+          "percent": 1.26,
+          "thread": "main"
+        },
+        {
+          "symbol": "__kdebug_trace64",
+          "weight_ns": 10000000,
+          "weight_ms": 10.0,
+          "samples": 10,
+          "percent": 1.05,
+          "thread": "main"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "lane": "hangs",
+      "available": true,
+      "schema_used": "potential-hangs",
+      "metrics": {
+        "count": 0,
+        "total_duration_ms": 0,
+        "worst_duration_ms": 0,
+        "severity_buckets": {
+          "lt_250ms": 0,
+          "250ms_1s": 0,
+          "gt_1s": 0
+        }
+      },
+      "top_offenders": [],
+      "notes": []
+    },
+    {
+      "lane": "hitches",
+      "available": false,
+      "notes": [
+        "Animation hitches not present in trace."
+      ]
+    },
+    {
+      "lane": "swiftui",
+      "available": false,
+      "notes": [
+        "SwiftUI lane not in trace (Xcode 26+ SwiftUI template required)."
+      ]
+    },
+    {
+      "lane": "swiftui-causes",
+      "available": false,
+      "notes": [
+        "SwiftUI causes data not present (requires SwiftUI template on a real device)."
+      ]
+    }
+  ],
+  "correlations": []
+}

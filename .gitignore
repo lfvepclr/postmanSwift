@@ -1,0 +1,7 @@
+.DS_Store
+.build/
+.swiftpm/
+dist/
+test_case/
+.agent/perf-baseline/tmp/
+*.xcuserstate

@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-28",
+  "build": "release, isolated data dir (library + history copy)",
+  "scenario": "activate → History → open 1.7MB JSON → 全部展开 → scroll 4 pages down/2 up → switch Preview/Headers",
+  "before": {
+    "timeProfiler": { "duration_s": 36, "hangs": 0, "cpu_ms": 1870 },
+    "swiftUI": { "duration_s": 36, "hitches": 803, "hitch_ms": 11646, "worst_frame_ms": 254 },
+    "ax_poll": { "snapshots": 6, "hangs_ms": [665, 383, 291, 278] },
+    "rss_mb": { "baseline_session": 145, "after_1_7mb_open": 150 }
+  },
+  "after": {
+    "timeProfiler": { "duration_s": 26, "hangs": 0, "cpu_ms": 950 },
+    "swiftUI": { "duration_s": 26, "hitches": 32, "hitch_ms": 500, "worst_frame_ms": 192 },
+    "ax_poll": { "snapshots": 6, "hangs": 0, "duration_s": 20.9 },
+    "rss_mb": { "before": 170, "after_5_opens": 174, "after_close": 185 },
+    "signposts_sample_ms": { "presentationBuild": 0.087, "flatten": 0.027, "fieldHighlight": 0.034 }
+  },
+  "tests": { "before": 104, "after": 111, "failures": 0 },
+  "notes": [
+    "Signposts must use OSLog category .pointsOfInterest to be recorded by Instruments.",
+    "Do not query the accessibility tree while recording; AX snapshots block the main thread for 0.3-1.2s.",
+    "Xcode 26.6 does not populate the SwiftUI updates lane on this host; hitches are aggregate only.",
+    "Input latency p95 still needs a raw-body typing scenario; probes are in place."
+  ]
+}

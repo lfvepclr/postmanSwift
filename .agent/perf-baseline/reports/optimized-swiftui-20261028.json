@@ -1,0 +1,409 @@
+{
+  "trace": ".agent/perf-baseline/traces/optimized-swiftui-20261028.trace",
+  "xctrace_version": "16.0 (17F113)",
+  "run": 1,
+  "runs_available": [
+    1
+  ],
+  "template": "SwiftUI",
+  "duration_s": 25.77907,
+  "start_date": "2026-10-28T21:02:13.241+08:00",
+  "end_date": "2026-10-28T21:02:39.020+08:00",
+  "schemas_available": [
+    "SwiftUIFilteredUpdates",
+    "dyld-library-load",
+    "hang-risks",
+    "hitches",
+    "hitches-frame-lifetimes",
+    "hitches-framewait",
+    "hitches-gpu",
+    "hitches-renders",
+    "hitches-updates",
+    "kdebug",
+    "kdebug-strings",
+    "life-cycle-period",
+    "os-log",
+    "potential-hangs",
+    "process-info",
+    "runloop-events",
+    "swiftui-causes",
+    "swiftui-changes",
+    "swiftui-full-causes",
+    "swiftui-update-groups",
+    "swiftui-updates",
+    "thread-info",
+    "tick",
+    "time-profile",
+    "time-sample"
+  ],
+  "lanes": [
+    {
+      "lane": "time-profiler",
+      "available": true,
+      "schema_used": "time-profile",
+      "metrics": {
+        "total_samples": 9608,
+        "total_weight_ns": 960800000,
+        "total_weight_ms": 960.8,
+        "window_start_ns": 364143458,
+        "window_end_ns": 25775839583,
+        "processes": [
+          "PostmanSwift"
+        ]
+      },
+      "top_offenders": [
+        {
+          "symbol": "mach_msg2_trap",
+          "weight_ns": 78000000,
+          "weight_ms": 78.0,
+          "samples": 780,
+          "percent": 8.12,
+          "thread": "main"
+        },
+        {
+          "symbol": "<deduplicated_symbol>",
+          "weight_ns": 26200000,
+          "weight_ms": 26.2,
+          "samples": 262,
+          "percent": 2.73,
+          "thread": "main"
+        },
+        {
+          "symbol": "objc_msgSend",
+          "weight_ns": 19800000,
+          "weight_ms": 19.8,
+          "samples": 198,
+          "percent": 2.06,
+          "thread": "main"
+        },
+        {
+          "symbol": "__mac_syscall",
+          "weight_ns": 19600000,
+          "weight_ms": 19.6,
+          "samples": 196,
+          "percent": 2.04,
+          "thread": "main"
+        },
+        {
+          "symbol": "AG::Graph::propagate_dirty(AG::AttributeID)",
+          "weight_ns": 16900000,
+          "weight_ms": 16.9,
+          "samples": 169,
+          "percent": 1.76,
+          "thread": "main"
+        },
+        {
+          "symbol": "AG::Graph::UpdateStack::update()",
+          "weight_ns": 15300000,
+          "weight_ms": 15.3,
+          "samples": 153,
+          "percent": 1.59,
+          "thread": "main"
+        },
+        {
+          "symbol": "DYLD-STUB$$protocol witness for OptionSet.init(rawValue:) in conformance DisplayList.Properties",
+          "weight_ns": 15200000,
+          "weight_ms": 15.2,
+          "samples": 152,
+          "percent": 1.58,
+          "thread": "main"
+        },
+        {
+          "symbol": "_platform_memmove",
+          "weight_ns": 13200000,
+          "weight_ms": 13.2,
+          "samples": 132,
+          "percent": 1.37,
+          "thread": "main"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "lane": "hangs",
+      "available": true,
+      "schema_used": "potential-hangs",
+      "metrics": {
+        "count": 0,
+        "total_duration_ms": 0,
+        "worst_duration_ms": 0,
+        "severity_buckets": {
+          "lt_250ms": 0,
+          "250ms_1s": 0,
+          "gt_1s": 0
+        }
+      },
+      "top_offenders": [],
+      "notes": []
+    },
+    {
+      "lane": "hitches",
+      "available": true,
+      "schema_used": "hitches",
+      "metrics": {
+        "count": 32,
+        "total_hitch_ms": 499.93,
+        "worst_hitch_ms": 191.67,
+        "per_process": {
+          "PostmanSwift": 32
+        },
+        "system_hitches": 0,
+        "app_hitches": 32,
+        "narrative_breakdown": {
+          "Potentially expensive app update(s)": 10
+        }
+      },
+      "top_offenders": [
+        {
+          "start_ms": 4332.11,
+          "hitch_duration_ms": 191.67,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        },
+        {
+          "start_ms": 8248.76,
+          "hitch_duration_ms": 25.0,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        },
+        {
+          "start_ms": 2307.11,
+          "hitch_duration_ms": 16.67,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        },
+        {
+          "start_ms": 13002.92,
+          "hitch_duration_ms": 16.67,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": null,
+          "is_system": false
+        },
+        {
+          "start_ms": 20502.9,
+          "hitch_duration_ms": 16.67,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        },
+        {
+          "start_ms": 9815.43,
+          "hitch_duration_ms": 12.5,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        },
+        {
+          "start_ms": 11640.42,
+          "hitch_duration_ms": 12.5,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": null,
+          "is_system": false
+        },
+        {
+          "start_ms": 13269.58,
+          "hitch_duration_ms": 8.33,
+          "frame_duration_ms": null,
+          "process": "PostmanSwift",
+          "narrative": "Potentially expensive app update(s)",
+          "is_system": false
+        }
+      ],
+      "notes": []
+    },
+    {
+      "lane": "swiftui",
+      "available": true,
+      "schemas_used": [
+        "swiftui-changes",
+        "swiftui-update-groups",
+        "swiftui-updates"
+      ],
+      "metrics": {
+        "total_events": 0,
+        "unique_views": 0,
+        "total_duration_ms": 0.0,
+        "severity_breakdown": {},
+        "update_type_breakdown": {},
+        "category_breakdown": {}
+      },
+      "top_offenders": [],
+      "longest_single_events": [],
+      "high_severity_events": [],
+      "notes": []
+    },
+    {
+      "lane": "swiftui-causes",
+      "available": true,
+      "schema_used": "swiftui-causes",
+      "metrics": {
+        "total_edges": 0,
+        "unique_sources": 0,
+        "unique_destinations": 0,
+        "top_labels": {}
+      },
+      "top_sources": [],
+      "top_destinations": [],
+      "notes": []
+    }
+  ],
+  "correlations": [
+    {
+      "trigger": {
+        "lane": "hitches",
+        "start_ms": 4332.11,
+        "end_ms": 4523.77,
+        "duration_ms": 191.67,
+        "frame_duration_ms": null,
+        "hitch_duration_ms": 191.67
+      },
+      "time_profiler_main_thread": {
+        "samples_in_window": 1,
+        "samples_on_main": 0,
+        "main_running_coverage_pct": 0.0,
+        "hot_symbols": []
+      },
+      "swiftui_overlapping_updates": []
+    },
+    {
+      "trigger": {
+        "lane": "hitches",
+        "start_ms": 8248.76,
+        "end_ms": 8273.76,
+        "duration_ms": 25.0,
+        "frame_duration_ms": null,
+        "hitch_duration_ms": 25.0
+      },
+      "time_profiler_main_thread": {
+        "samples_in_window": 187,
+        "samples_on_main": 178,
+        "main_running_coverage_pct": 100.0,
+        "hot_symbols": [
+          {
+            "symbol": "mach_msg2_trap",
+            "samples": 20,
+            "weight_ms": 2.0,
+            "percent_of_main": 11.24
+          },
+          {
+            "symbol": "objc_msgSend",
+            "samples": 5,
+            "weight_ms": 0.5,
+            "percent_of_main": 2.81
+          },
+          {
+            "symbol": "__bsdthread_ctl",
+            "samples": 5,
+            "weight_ms": 0.5,
+            "percent_of_main": 2.81
+          },
+          {
+            "symbol": "<deduplicated_symbol>",
+            "samples": 5,
+            "weight_ms": 0.5,
+            "percent_of_main": 2.81
+          },
+          {
+            "symbol": "___chkstk_darwin",
+            "samples": 4,
+            "weight_ms": 0.4,
+            "percent_of_main": 2.25
+          }
+        ]
+      },
+      "swiftui_overlapping_updates": []
+    },
+    {
+      "trigger": {
+        "lane": "hitches",
+        "start_ms": 2307.11,
+        "end_ms": 2323.78,
+        "duration_ms": 16.67,
+        "frame_duration_ms": null,
+        "hitch_duration_ms": 16.67
+      },
+      "time_profiler_main_thread": {
+        "samples_in_window": 0,
+        "samples_on_main": 0,
+        "main_running_coverage_pct": 0.0,
+        "hot_symbols": []
+      },
+      "swiftui_overlapping_updates": []
+    },
+    {
+      "trigger": {
+        "lane": "hitches",
+        "start_ms": 13002.92,
+        "end_ms": 13019.59,
+        "duration_ms": 16.67,
+        "frame_duration_ms": null,
+        "hitch_duration_ms": 16.67
+      },
+      "time_profiler_main_thread": {
+        "samples_in_window": 94,
+        "samples_on_main": 94,
+        "main_running_coverage_pct": 100.0,
+        "hot_symbols": [
+          {
+            "symbol": "mach_msg2_trap",
+            "samples": 12,
+            "weight_ms": 1.2,
+            "percent_of_main": 12.77
+          },
+          {
+            "symbol": "__kdebug_trace64",
+            "samples": 7,
+            "weight_ms": 0.7,
+            "percent_of_main": 7.45
+          },
+          {
+            "symbol": "__mac_syscall",
+            "samples": 4,
+            "weight_ms": 0.4,
+            "percent_of_main": 4.26
+          },
+          {
+            "symbol": "_kernelrpc_mach_port_deallocate_trap",
+            "samples": 4,
+            "weight_ms": 0.4,
+            "percent_of_main": 4.26
+          },
+          {
+            "symbol": "_platform_memmove",
+            "samples": 2,
+            "weight_ms": 0.2,
+            "percent_of_main": 2.13
+          }
+        ]
+      },
+      "swiftui_overlapping_updates": []
+    },
+    {
+      "trigger": {
+        "lane": "hitches",
+        "start_ms": 20502.9,
+        "end_ms": 20519.57,
+        "duration_ms": 16.67,
+        "frame_duration_ms": null,
+        "hitch_duration_ms": 16.67
+      },
+      "time_profiler_main_thread": {
+        "samples_in_window": 0,
+        "samples_on_main": 0,
+        "main_running_coverage_pct": 0.0,
+        "hot_symbols": []
+      },
+      "swiftui_overlapping_updates": []
+    }
+  ]
+}
