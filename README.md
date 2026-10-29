@@ -74,57 +74,37 @@
 ### 分层
 
 ```mermaid
+%%{init: {"flowchart": {"wrappingWidth": 210}}}%%
 flowchart TB
   subgraph UI["UI · SwiftUI + AppKit"]
-    Root[RootView<br/>分栏 / 窗口控制]
-    Sidebar[SidebarView<br/>Collections / History / Mock]
-    Tabs[TabBarView]
-    Req[RequestEditorView]
-    Resp[ResponseView]
-    Tree[JSONTreeView<br/>LazyVStack + 单一 AX 元素]
-    Env[EnvironmentWorkspaceView]
-    MockUI[MockWorkspaceView]
+    direction LR
+    U1["窗口外壳<br/>RootView · TabBarView"] ~~~ U2["侧栏<br/>SidebarView"] ~~~ U3["请求编辑<br/>RequestEditorView"]
+    U4["响应预览<br/>ResponseView · JSONTreeView"] ~~~ U5["环境与 Mock<br/>EnvironmentWorkspaceView · MockWorkspaceView"]
   end
-
   subgraph STATE["状态"]
-    Store[AppStore<br/>@Observable]
-    TabState[RequestTab<br/>draft / response]
-    UIState[UIState<br/>弹层 / 控制台]
+    direction LR
+    S1["AppStore<br/>@Observable"] ~~~ S2["RequestTab<br/>draft / response"] ~~~ S3["UIState<br/>弹层 / 控制台"]
   end
-
   subgraph CORE["领域与能力"]
-    Builder[RequestBuilder / AuthBuilder<br/>BodyBuilder / VariableResolver]
-    HTTP[HTTPClient / RawHTTPClient<br/>WebSocketClient]
-    Script[ScriptRunner<br/>JavaScriptCore pm.*]
-    Mock[MockServer]
-    Doc[DocumentTree / JSONTree<br/>PayloadClassifier]
-    Import[ImportExport / OpenAPIImporter]
-    CodeGen[CodeGenerator / PDFExtractor]
+    direction LR
+    C1["请求构造<br/>Builder · VariableResolver"] ~~~ C2["传输<br/>HTTPClient · WebSocketClient"] ~~~ C3["脚本<br/>ScriptRunner"]
+    C4["Mock<br/>MockServer"] ~~~ C5["解析<br/>DocumentTree · JSONTree"] ~~~ C6["导入导出与代码<br/>ImportExport · CodeGenerator"]
   end
-
   subgraph DATA["本地存储"]
-    Lib[library.json]
-    Session[session.json]
-    History[history.sqlite]
-    Bodies[history-bodies / response-cache]
-    Cookies[cookies.json]
+    direction LR
+    D1["library · session · cookies"] ~~~ D2["history.sqlite"] ~~~ D3["history-bodies<br/>response-cache"]
   end
-
-  UI --> Store
-  Store --> TabState
-  Store --> UIState
-  Store --> Builder
-  Store --> HTTP
-  Store --> Script
-  Store --> Mock
-  Store --> Doc
-  Store --> Import
-  Store --> CodeGen
-  Store --> Lib
-  Store --> Session
-  Store --> History
-  History --> Bodies
-  Store --> Cookies
+  UI -->|读写| STATE
+  STATE -->|调用| CORE
+  CORE -->|落盘| DATA
+  classDef layerUI fill:#e8f0fe,stroke:#4285f4,color:#174ea6
+  classDef layerState fill:#fef7e0,stroke:#f9ab00,color:#7c5c00
+  classDef layerCore fill:#e6f4ea,stroke:#34a853,color:#0b6130
+  classDef layerData fill:#f1e8fd,stroke:#a142f4,color:#5b1d8f
+  class U1,U2,U3,U4,U5 layerUI
+  class S1,S2,S3 layerState
+  class C1,C2,C3,C4,C5,C6 layerCore
+  class D1,D2,D3 layerData
 ```
 
 ### 请求生命周期
@@ -157,15 +137,22 @@ sequenceDiagram
 ### JSON 预览管线
 
 ```mermaid
-flowchart LR
-  Raw[响应字节] --> Decode[DocumentTreeBuilder<br/>JSON / XML 解析]
-  Decode --> Node[JSONTreeNode]
-  Node --> Presentation[JSONTreePresentation<br/>默认展开 + 内嵌预解析]
-  Presentation --> Flatten[flattenResult<br/>rows + node index]
-  Flatten --> Rows[LazyVStack<br/>仅布局可视行]
-  Flatten --> Toggle[增量 toggle<br/>subtree splice]
-  Rows --> AX[行级单一 AX 元素]
-  Toggle --> Rows
+%%{init: {"flowchart": {"wrappingWidth": 210}}}%%
+flowchart TB
+  subgraph P1["① 解析"]
+    direction LR
+    Raw["响应字节"] --> Decode["DocumentTreeBuilder<br/>JSON / XML 解析"] --> Node["JSONTreeNode"]
+  end
+  subgraph P2["② 呈现"]
+    direction LR
+    Pres["JSONTreePresentation<br/>默认展开 + 内嵌预解析"] --> Flat["flattenResult<br/>rows + node index"] --> Toggle["增量 toggle<br/>subtree splice"]
+  end
+  subgraph P3["③ 渲染"]
+    direction LR
+    Rows["LazyVStack<br/>仅布局可视行"] --> AX["行级单一 AX 元素"]
+  end
+  P1 --> P2
+  P2 -->|splice| P3
 ```
 
 要点：
