@@ -3,7 +3,7 @@ import Foundation
 
 enum AppInfo {
     /// Used when the binary runs outside an .app bundle (`swift run`), where Info.plist is absent.
-    static let fallbackVersion = "1.1.0"
+    static let fallbackVersion = "0.1.0"
 
     static var version: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? fallbackVersion
